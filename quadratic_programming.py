@@ -21,11 +21,17 @@ def get_int():
     val = int(data[ptr]); ptr += 1
     return val
 
+def get_float():
+    global ptr
+    val = float(data[ptr]); ptr += 1
+    return val
+
+
 n = get_int()
 
-Q = [[get_int() for _ in range(n)] for _ in range(n)]
+Q = [[get_float() for _ in range(n)] for _ in range(n)]
 Q = np.array(Q, dtype=float)
-c = [get_int() for _ in range(n)]
+c = [get_float() for _ in range(n)]
 c = np.array(c, dtype=float)
 
 # max 1/2 xTQx + cTx
@@ -36,8 +42,8 @@ b = [0.0 for _ in range(m)]
 print("Input A and b: ")
 for i in range(m):
     for j in range(n):
-        A[i][j] = get_int()
-    b[i] = get_int()
+        A[i][j] = get_float()
+    b[i] = get_float()
 A = np.array(A, dtype=float)
 b = np.array(b, dtype=float)
  
