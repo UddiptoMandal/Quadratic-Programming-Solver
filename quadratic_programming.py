@@ -88,12 +88,21 @@ for _ in range(n):
 
 
 for _ in range(m):
-    A_lp[n+_, 0:n] = A[_, :]
-    A_lp[n+_, n+_] = 1
-    A_lp[n+_, n+m: n+m+m] = 0
-    A_lp[n+_, n+m+m: n+m+m+n] = 0
-    A_lp[n+_, n+m+m+n+_] = 1
-    b_lp[n+_] = b[_]
+    if b[_] >= 0:
+
+        A_lp[n+_, 0:n] = A[_, :]
+        A_lp[n+_, n+_] = 1
+        A_lp[n+_, n+m: n+m+m] = 0
+        A_lp[n+_, n+m+m: n+m+m+n] = 0
+        A_lp[n+_, n+m+m+n+_] = 1
+        b_lp[n+_] = b[_]
+    else:
+        A_lp[n+_, 0:n] = -A[_, :]
+        A_lp[n+_, n+_] = -1
+        A_lp[n+_, n+m: n+m+m] = 0
+        A_lp[n+_, n+m+m: n+m+m+n] = 0
+        A_lp[n+_, n+m+m+n+_] = 1
+        b_lp[n+_] = -b[_]
 rh = 0
 
 def Gauss_jordan_converter(A_lp, b_lp, rh, c_lp, n, m):
@@ -129,7 +138,7 @@ A_lp = A_lp.tolist()
 solver = revised_simplex(num_var-num_eq, num_eq, c_lp, A_lp, b_lp, num_complementary, ind1_lp, ind2_lp, rh)
 x, rh = solver.solve()
 output_objective = 0.5 * x[:n].T @ Q @ x[:n] + c @ x[:n]
-print(f"Val of objective function: {output_objective}, x: {x}")
+print(f"Val of objective function: {output_objective}, x: {x[:n]}")
 
 
 
